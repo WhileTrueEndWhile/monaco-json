@@ -44,9 +44,31 @@
         "vs/basic-languages/monaco.contribution",
         "vs/language/json/monaco.contribution"
       ], function() {
+        var viewElement = document.getElementById("container");
         var modelUri = "test://model.json";
-        var schema = { "type": "object" };
-        var data = {};
+        var schema = {
+          oneOf: [
+            {
+              description: "Title1",
+              enum: ["value1"],
+              default: "value1",
+              readOnly: true
+            },
+            {
+              description: "Title2",
+              enum: ["value2"],
+              default: "value2",
+              readOnly: true
+            },
+            {
+              description: "Title3",
+              enum: ["value3"],
+              default: "value3",
+              readOnly: true
+            }
+          ]
+        };
+        var data = "";
         var jsonDefaults = monaco.languages.json.jsonDefaults;
         var options = {
           validate: true,
@@ -62,9 +84,7 @@
         var uri = monaco.Uri.parse(modelUri);
         var editor = monaco.editor;
         var model = editor.createModel(data, "json", uri);
-        // --------------------------------------------------------
         var instance = editor.create(viewElement, { model: model });
-        // --------------------------------------------------------
       });
     </script>
   </body>
